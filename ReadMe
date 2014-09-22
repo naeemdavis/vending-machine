@@ -1,0 +1,25 @@
+1> Unzip and Open this project in any eclipse, I used STS (Spring Tool Suite).
+
+2> then run VendingMachineServiceTest as unit test.
+
+  2.1 First few test are checking (PART-1)
+  
+       public Collection<Coin> getOptimalChangeFor(int pence)
+	   
+  2.2 Then three test are checking (PART-2)   
+        
+	  Public Collection<Coin> getChangeFor(int pence)
+	 
+3> Main services classes are 
+
+     VendingMachineServiceImpl
+         This class contains above two methods. You can also see reuse of code in one and other.
+
+      CoinInventoryServiceImpl
+         service is available for reading/updating property file (coin-inventory.properties)
+
+4> Please also check additional classes such as ResultCode enum (for errors), Coin enum.
+    How affectively these two can be used in Insufficient Coins exception and services layer.
+	
+5> Bonus.
+    This vending machine service can be deployed on any tomcat and use as a service.
