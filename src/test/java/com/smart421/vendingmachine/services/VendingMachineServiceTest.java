@@ -72,5 +72,15 @@ public class VendingMachineServiceTest {
         Assert.assertEquals(coins[5], Coin.TWO_PENCE);
 
     }
+    
+    
+    @Test
+    public void testgetChangeFor_99Pence() {
+        Collection<Coin> coinsList = vendingMachineService.getChangeFor(99);
+        Assert.assertNotNull(coinsList);
+        Assert.assertSame(coinsList.size(), 6);
+
+
+    }
 
 }

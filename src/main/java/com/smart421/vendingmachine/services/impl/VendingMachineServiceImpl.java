@@ -9,7 +9,7 @@ import com.smart421.vendingmachine.type.Coin;
 
 public class VendingMachineServiceImpl implements VendingMachineService {
 
-    Coin coins[] = new Coin[] { Coin.ONE_POUND, Coin.FIFTY_PENCE, Coin.TWENTY_PENCE, Coin.TEN_PENCE,
+    public static Coin coins[] = new Coin[] { Coin.ONE_POUND, Coin.FIFTY_PENCE, Coin.TWENTY_PENCE, Coin.TEN_PENCE,
                     Coin.FIVE_PENCE, Coin.TWO_PENCE, Coin.ONE_PENCE };
 
     @Override
@@ -36,8 +36,9 @@ public class VendingMachineServiceImpl implements VendingMachineService {
         int[] result = new int[coins2.length];
         int remaining = value;
         for (int i = 0; i < coins2.length && remaining > 0; i++) {
-            result[i] = remaining / coins2[i].getDenomination();
-            remaining %= coins2[i].getDenomination();
+            Integer denomination = Integer.valueOf(coins2[i].getDenomination());
+			result[i] = remaining / denomination;
+            remaining %= denomination;
         }
         return result;
 
@@ -45,7 +46,15 @@ public class VendingMachineServiceImpl implements VendingMachineService {
 
     @Override
     public Collection<Coin> getChangeFor(int pence) {
-        return null;
+    	
+    	  ArrayList<Coin> coinList = new ArrayList<Coin>();
+          int[] change = getChange(coins, pence);
+          ArrayList<Coin> coinsList = (ArrayList<Coin>) getCoinsList(coinList, change);
+        
+          FileServiceImpl fileService = new FileServiceImpl();
+          fileService.updatePropertiesFiles(coinsList);
+    	
+    	return null;
     }
 
 }
