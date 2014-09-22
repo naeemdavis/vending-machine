@@ -14,10 +14,11 @@ import java.util.Map.Entry;
 import java.util.Properties;
 
 import com.smart421.vendingmachine.exception.VendingMachineException;
+import com.smart421.vendingmachine.services.CoinInventoryService;
 import com.smart421.vendingmachine.type.Coin;
 import com.smart421.vendingmachine.type.ResultCodeType;
 
-public class CoinInventoryServiceImpl {
+public class CoinInventoryServiceImpl implements CoinInventoryService {
 
 	private static final String COIN_INVENTORY_PROPERTIES_FILE = "coin-inventory.properties";
 
@@ -42,7 +43,6 @@ public class CoinInventoryServiceImpl {
 					Integer availbleCoins = Integer.valueOf(propertiesMap
 							.get(coin) != null ? propertiesMap.get(coin) : prop
 							.getProperty(currentDenomination));
-					System.out.println(availbleCoins);
 					if (availbleCoins > 0) {
 						currentAvailableCoins = availbleCoins - 1;
 						propertiesMap.put(coin,
@@ -50,10 +50,8 @@ public class CoinInventoryServiceImpl {
 					}
 				}
 			} else {
-
 				throw new VendingMachineException(
 						ResultCodeType.INSUFFICIENT_COINS);
-
 			}
 
 			updatePropertiesFile(propertiesMap, prop);
@@ -69,15 +67,11 @@ public class CoinInventoryServiceImpl {
 
 	private void updatePropertiesFile(HashMap<Coin, String> propertiesMap,
 			Properties filesProp) {
-
 		Properties prop = new Properties();
-
 		OutputStream output = null;
 
 		try {
-
 			output = new FileOutputStream(COIN_INVENTORY_PROPERTIES_FILE);
-
 			for (Map.Entry<Coin, String> entry : propertiesMap.entrySet()) {
 				String denomination = entry.getKey().getDenomination();
 				prop.setProperty(denomination, entry.getValue());
@@ -117,7 +111,6 @@ public class CoinInventoryServiceImpl {
 		defaultProperties.put(Coin.ONE_PENCE, "23");
 
 		updatePropertiesFile(defaultProperties, null);
-
 	}
 
 	public Coin[] getArrayOfAvailableCoins(BigDecimal pences) {
