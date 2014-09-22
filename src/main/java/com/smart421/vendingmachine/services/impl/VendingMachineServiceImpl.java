@@ -3,7 +3,6 @@ package com.smart421.vendingmachine.services.impl;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
 
 import com.smart421.vendingmachine.services.VendingMachineService;
 import com.smart421.vendingmachine.type.Coin;
@@ -38,13 +37,12 @@ public class VendingMachineServiceImpl implements VendingMachineService {
     public Collection<Coin> getChangeFor(int pence) {
           CoinInventoryServiceImpl coinInventoryServiceImpl = new CoinInventoryServiceImpl();
           Coin coins[] = coinInventoryServiceImpl.getArrayOfAvailableCoins(new BigDecimal(pence));
-
           int[] change = VendingMachineUtils.getChange(coins, pence);
           ArrayList<Coin> coinsList = (ArrayList<Coin>) getCoinsList(change, coins);
 
           coinInventoryServiceImpl.updateProperties(coinsList);
 
-    	return null;
+    	return coinsList;
     }
 
 }

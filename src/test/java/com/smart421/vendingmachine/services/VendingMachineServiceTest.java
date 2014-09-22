@@ -19,6 +19,8 @@ public class VendingMachineServiceTest {
         vendingMachineService = new VendingMachineServiceImpl();
     }
 
+    /****PART 1 Tests getOptimalChangeFor***/
+    
     @Test
     public void testgetOptimalChangeFor_70Pence() {
         Collection<Coin> coinsList = vendingMachineService.getOptimalChangeFor(70);
@@ -71,12 +73,51 @@ public class VendingMachineServiceTest {
         Assert.assertEquals(coins[4], Coin.TWO_PENCE);
         Assert.assertEquals(coins[5], Coin.TWO_PENCE);
     }
+    
+    
+    /****PART 2 Tests getChangeFor***/
+    
 
-    @Test(expected = VendingMachineException.class)
-    public void testgetChangeFor_99Pence() {
-        Collection<Coin> coinsList = vendingMachineService.getChangeFor(250);
+    
+    @Test
+    public void testgetChangeFor_89Pence() {
+        Collection<Coin> coinsList = vendingMachineService.getChangeFor(89);
         Assert.assertNotNull(coinsList);
-        Assert.assertSame(coinsList.size(), 6);
+        Assert.assertSame(coinsList.size(), 7);
+        Object[] coins = coinsList.toArray();
+        Assert.assertEquals(coins[0], Coin.FIFTY_PENCE);
+        Assert.assertEquals(coins[1], Coin.TEN_PENCE);
+        Assert.assertEquals(coins[2], Coin.TEN_PENCE);
+        Assert.assertEquals(coins[3], Coin.TEN_PENCE);
+        Assert.assertEquals(coins[4], Coin.FIVE_PENCE);
+        Assert.assertEquals(coins[5], Coin.TWO_PENCE);
+        Assert.assertEquals(coins[6], Coin.TWO_PENCE);
+    }
+
+    
+    
+    @Test
+    public void testgetChangeFor_99Pence() {
+        Collection<Coin> coinsList = vendingMachineService.getChangeFor(99);
+        Assert.assertNotNull(coinsList);
+        Assert.assertSame(coinsList.size(), 8);
+        
+        Object[] coins = coinsList.toArray();
+        Assert.assertEquals(coins[0], Coin.FIFTY_PENCE);
+        Assert.assertEquals(coins[1], Coin.TEN_PENCE);
+        Assert.assertEquals(coins[2], Coin.TEN_PENCE);
+        Assert.assertEquals(coins[3], Coin.TEN_PENCE);
+        Assert.assertEquals(coins[4], Coin.TEN_PENCE);
+        Assert.assertEquals(coins[5], Coin.FIVE_PENCE);
+        Assert.assertEquals(coins[6], Coin.TWO_PENCE);
+        Assert.assertEquals(coins[7], Coin.TWO_PENCE);
+    }
+    
+    
+    @Test(expected = VendingMachineException.class)
+    public void testgetChangeFor_4336Pence_insufficentCoins() {
+        vendingMachineService.getChangeFor(4336);
+        Assert.fail("Should not reach this point");
     }
 
 }
