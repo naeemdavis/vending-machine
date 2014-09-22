@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smart421.vendingmachine.exception.WebServiceHandlerExceptionResolver;
 
 @Configuration
-@ComponentScan({"com.highstreet"})
+@ComponentScan({"com.smart421"})
 @EnableWebMvc
 public class AppConfig extends WebMvcConfigurerAdapter {
 

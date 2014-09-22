@@ -1,11 +1,13 @@
 package com.smart421.vendingmachine.services.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
 import com.smart421.vendingmachine.services.VendingMachineService;
 import com.smart421.vendingmachine.type.Coin;
+import com.smart421.vendingmachine.utils.VendingMachineUtils;
 
 public class VendingMachineServiceImpl implements VendingMachineService {
 
@@ -14,13 +16,13 @@ public class VendingMachineServiceImpl implements VendingMachineService {
 
     @Override
     public Collection<Coin> getOptimalChangeFor(int pence) {
-        ArrayList<Coin> coinList = new ArrayList<Coin>();
-        int[] change = getChange(coins, pence);
-        return getCoinsList(coinList, change);
+        int[] change = VendingMachineUtils.getChange(coins, pence);
+        return getCoinsList(change, coins);
     }
 
-    private Collection<Coin> getCoinsList(ArrayList<Coin> coinList, int[] change) {
-        Coin coin;
+    private Collection<Coin> getCoinsList(int[] change, Coin coins[]) {
+        ArrayList<Coin> coinList = new ArrayList<Coin>();
+
         for (int i = 0; i < change.length; i++) {
             int coinsCount = change[i];
             for (int c = 0; c < coinsCount; c++) {
@@ -31,29 +33,17 @@ public class VendingMachineServiceImpl implements VendingMachineService {
         return coinList;
     }
 
-    public static int[] getChange(Coin[] coins2, int value) {
-
-        int[] result = new int[coins2.length];
-        int remaining = value;
-        for (int i = 0; i < coins2.length && remaining > 0; i++) {
-            Integer denomination = Integer.valueOf(coins2[i].getDenomination());
-			result[i] = remaining / denomination;
-            remaining %= denomination;
-        }
-        return result;
-
-    }
 
     @Override
     public Collection<Coin> getChangeFor(int pence) {
-    	
-    	  ArrayList<Coin> coinList = new ArrayList<Coin>();
-          int[] change = getChange(coins, pence);
-          ArrayList<Coin> coinsList = (ArrayList<Coin>) getCoinsList(coinList, change);
-        
-          FileServiceImpl fileService = new FileServiceImpl();
-          fileService.updatePropertiesFiles(coinsList);
-    	
+          CoinInventoryServiceImpl coinInventoryServiceImpl = new CoinInventoryServiceImpl();
+          Coin coins[] = coinInventoryServiceImpl.getArrayOfAvailableCoins(new BigDecimal(pence));
+
+          int[] change = VendingMachineUtils.getChange(coins, pence);
+          ArrayList<Coin> coinsList = (ArrayList<Coin>) getCoinsList(change, coins);
+
+          coinInventoryServiceImpl.updateProperties(coinsList);
+
     	return null;
     }
 

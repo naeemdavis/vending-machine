@@ -7,7 +7,7 @@
 </context-param>
 <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>com.highstreet.AppConfig</param-value>
+    <param-value>com.smart421.AppConfig</param-value>
 </context-param>
 
     <listener>
@@ -22,7 +22,7 @@
         </init-param>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>com.highstreet.AppConfig</param-value>
+            <param-value>com.smart421.AppConfig</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>

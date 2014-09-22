@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.smart421.vendingmachine.exception.VendingMachineException;
 import com.smart421.vendingmachine.services.impl.VendingMachineServiceImpl;
 import com.smart421.vendingmachine.type.Coin;
 
@@ -54,7 +55,6 @@ public class VendingMachineServiceTest {
         Assert.assertEquals(coins[3], Coin.FIVE_PENCE);
         Assert.assertEquals(coins[4], Coin.TWO_PENCE);
         Assert.assertEquals(coins[5], Coin.TWO_PENCE);
-
     }
 
     @Test
@@ -70,17 +70,13 @@ public class VendingMachineServiceTest {
         Assert.assertEquals(coins[3], Coin.FIVE_PENCE);
         Assert.assertEquals(coins[4], Coin.TWO_PENCE);
         Assert.assertEquals(coins[5], Coin.TWO_PENCE);
-
     }
-    
-    
-    @Test
+
+    @Test(expected = VendingMachineException.class)
     public void testgetChangeFor_99Pence() {
-        Collection<Coin> coinsList = vendingMachineService.getChangeFor(99);
+        Collection<Coin> coinsList = vendingMachineService.getChangeFor(250);
         Assert.assertNotNull(coinsList);
         Assert.assertSame(coinsList.size(), 6);
-
-
     }
 
 }
